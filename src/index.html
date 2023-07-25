@@ -4,39 +4,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page title</title>
-    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="./rating-pop-up.css" />
   </head>
   <body>
-    <section class="modal modal-feedback"></section>
-    <a href="#" class="open-popup ">Give a rating</a>
-    <div class="popup-bg ">
-      
-      <form class="popup">
-        <div class="rating-btn-close">X</div>
-        <div class="popup-text">Rating</div>
-        <div class="rating rating-set">
-          <div class="rating-body">
+    <a class="open-popup popup-link" data-modal-open>Give a rating</a>
 
+    <div class="backdrop is-hidden" data-modal>
+      <div class="modal">
+        <button type="button" class="modal-close-btn" data-modal-close>
+          <svg
+            class="rating-modal-close"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 5L5 15"
+              stroke="#050505"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5 5L15 15"
+              stroke="#050505"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <div class="popup-text">Rating</div>
+        <div data-ajax="true" class="rating rating-set">
+          <div class="rating-body">
             <div class="rating-active"></div>
             <div class="rating-items">
-            <input type="radio" class="rating-item" name="rating" value="1">
-            <input type="radio" class="rating-item" name="rating" value="2">
-            <input type="radio" class="rating-item" name="rating" value="3">
-            <input type="radio" class="rating-item" name="rating" value="4">
-            <input type="radio" class="rating-item" name="rating" value="5">
-          </div>
+              <input type="radio" class="rating-item" name="rating" value="1" />
+              <input type="radio" class="rating-item" name="rating" value="2" />
+              <input type="radio" class="rating-item" name="rating" value="3" />
+              <input type="radio" class="rating-item" name="rating" value="4" />
+              <input type="radio" class="rating-item" name="rating" value="5" />
+            </div>
           </div>
           <div class="rating-value">0.0</div>
         </div>
-        <!-- <img src="images/close.svg" class="close-popup" /> -->
-        <label>
-          <label class="form-lable ">
-            <input placeholder="Enter email" type="email" name="mail" class="form-input" autocomplete="on">     
-          </label>
+        <input
+          type="email"
+          name="email"
+          required
+          class="form-input"
+          placeholder="Enter email"
+        />
         <button class="submit-btn" type="submit">Send</button>
-      </form>
+      </div>
     </div>
-    <script type="module" src=".//js/pop-up.js"></script>
+    <script type="module" src="./btn-open.js"></script>
+    <script type="module" src="./js/pop-up.js"></script>
     <!-- <include src="./partials/example.html"></include> -->
   </body>
 </html>
