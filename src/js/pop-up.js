@@ -13,13 +13,14 @@ function toggleModal() {
   refs.modal.classList.toggle('is-hidden');
 }
 
+const getData = document.getElementById('add');
 const input = document.querySelector('.form-input');
-const modal = document.querySelector('.modal');
 const btnSend = document.querySelector('.submit-btn');
 const ratings = document.querySelectorAll('.rating');
 if (ratings.length > 0) {
   initRatings();
 }
+
 function initRatings() {
   let ratingActive, ratingValue;
   for (let index = 0; index < ratings.length; index++) {
@@ -57,51 +58,106 @@ function initRatings() {
       ratingItem.addEventListener('click', function (e) {
         initRatingVars(rating);
         // if (rating.dataset.ajax) {
-        //   setRatingValue(ratingItem.value, rating);
+        //setRatingValue(ratingItem.value, input);
         // } else {
         ratingValue.innerHTML = index + 1;
+        setRatingValue(ratingItem.value, input.value);
         setRatingActiveWidth();
+
+        console.log(ratingItem.value);
         // }
       });
     }
   }
-  // async function setRatingValue(value, rating) {
-  //   if (!rating.classList.add('rating-sending')) {
-  //     rating.classList.add('rating-sending');
-  //     let response = await fetch(
-  //       'https://tasty-treats-backend.p.goit.global/api/recipes/',
-  //       {
-  //         method: 'GET',
-  //         // body: JSON.stringify({
-  //         //   userRating: value,
-  //         // }),
-  //         // headers: {
-  //         //   'content-type': 'application/json',
-  //         // },
-  //       }
-  //     );
-  //     if (response.ok) {
-  //       const result = await response.json();
-  //       const newRating = result.newRating;
-  //       ratingValue.innerHTML = newRating;
-  //       setRatingActiveWidth();
-  //       rating.classList.remove('rating-sending');
-  //     } else {
-  //       alert('False');
-  //       PerformanceResourceTiming.classList.remove('rating-sending');
-  //     }
-  //   }
+
+  // const options =  {
+  //       method: 'PATCH',
+  //       body: JSON.stringify({
+  //         userRating: value,
+  //         userMail: getInputData,
+  //       }),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
   // }
-}
-const div = document.querySelector('.backdrop');
-function onBackdropClick(e) {
-  if (e.currentTarget !== e.target) {
-    div.classList.add('is-hidden');
+
+  // return fetch('https://tasty-treats-backend.p.goit.global/api/recipes/', options)
+  //   .then(resp => {
+  //     if (!resp.ok) {
+  //       throw new Error(resp.statusText)
+  //     }
+  //     return resp.json()
+  //   })
+  //   .then(data => console.log(data))
+  // .catch(err=>console.log(err))
+
+  async function setRatingValue(value, mail) {
+    // const options = {
+    //   method: 'PATCH',
+    //   body: JSON.stringify({
+    //     userRating: value,
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+
+    // return fetch(
+    //   'https://tasty-treats-backend.p.goit.global/api/recipes/{id}/rating',
+    //   options
+    // )
+    //   .then(resp => {
+    //     if (!resp.ok) {
+    //       throw new Error(resp.statusText);
+    //     }
+    //     return resp.json();
+    //   })
+    //   .then(data => console.log(data))
+    //   .catch(err => console.log(err));
+    //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // if (!rating.classList.add('rating-sending')) {
+    //   rating.classList.add('rating-sending');
+    let response = await fetch(
+      'https://tasty-treats-backend.p.goit.global/api/recipes/{id}/rating',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          userRating: value,
+          emailUser: mail,
+          // userMail: getInputData,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (response.ok) {
+      const result = await response.json();
+      const newRating = result.newRating;
+      ratingValue.innerHTML = newRating;
+      setRatingActiveWidth();
+    } else {
+      alert('False');
+    }
+    // }
   }
 }
+
+const modalBack = document.querySelector('.backdrop');
+
+// const modalEl = document.querySelector('.modal');
+// document.addEventListener('click', function (e) {
+//   const click = e.composedPath().includes('is-hidden');
+//   if (!click) {
+//     // refs.modal.classList.toggle('is-hidden');
+//     modalEl.style.display = 'none';
+//   }
+//   console.log(click);
+// });
+
 document.addEventListener('keydown', function (e) {
   if (e.code === 'Escape') {
     // код клавиши Escape, но можно использовать e.key
-    div.classList.add('is-hidden');
+    modalBack.classList.add('is-hidden');
   }
 });
